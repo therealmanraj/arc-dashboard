@@ -32,6 +32,7 @@ Needs Node 26 LTS (see `.nvmrc`), pnpm and Docker.
 cp .env.example .env
 docker compose up -d db
 pnpm install
+pnpm payload migrate
 pnpm dev
 ```
 

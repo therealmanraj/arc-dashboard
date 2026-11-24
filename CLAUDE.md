@@ -76,7 +76,7 @@ pnpm seed                    # load sample data (sample data only; never real gr
 - Use Payload's **Local API** on the server. Don't call the REST API from server code.
 - Business logic (metrics, fiscal year, import matching, publish windows) lives in plain functions under `src/lib` or `src/import`, with unit tests. Not in React components or Payload hooks.
 - Customize the Payload admin with its supported extension points (custom views, components, CSS variables). Don't fork or patch Payload.
-- Database changes go through Payload migrations, committed with the change.
+- Database changes go through Payload migrations, committed with the change. Push is off in every environment, dev included: after changing a collection, run `pnpm payload migrate:create <name>` then `pnpm payload migrate`. Reference data (pick-list values) is seeded by a migration; sample data by `pnpm seed`.
 - Never commit `.env`, uploaded media or database dumps. Add new variables to `.env.example`.
 
 ### Tests and done

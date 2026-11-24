@@ -15,7 +15,7 @@ Phase 1, in build order. Each step is a thin vertical slice that runs end to end
 ## 1. Grants, end to end
 
 - [ ] Collections: `funders`, `engagement-types`, `grants` (all fields in data-model.md), seeded pick lists.
-- [ ] `users` with `role` and access helpers (`isAdmin`, `isAdminOrEditor`).
+- [x] `users` with `role` and access helpers (`isAdmin`, `isAdminOrEditor`).
 - [ ] `src/lib/fiscalYear.ts` and `src/lib/metrics.ts` with unit tests (fiscal-year edges, hidden grants, archived excluded).
 - [ ] `GET /api/display/feed` with display-key check; `glance` and `activeGrants` sections.
 - [ ] TV slides 1 (At a glance) and 2 (Active grants, paged by 6) from the feed; loop controller with timings and progress bar.
