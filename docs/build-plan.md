@@ -7,7 +7,7 @@ Phase 1, in build order. Each step is a thin vertical slice that runs end to end
 - [x] Scaffold with `create-payload-app` (Postgres, blank template), pnpm, TypeScript strict, ESLint and Prettier.
 - [x] `docker-compose.yml` with Postgres 16 and a named volume; `.env.example`.
 - [x] Import `design/tokens.css` and `design/components.css`; Roboto Slab and Roboto from Google Fonts.
-- [ ] `/display` renders a static "At a glance." frame (stripe, logo, title, pager, footer) at 1920×1080.
+- [x] `/display` renders a static "At a glance." frame (stripe, logo, title, pager, footer) at 1920×1080.
 - [ ] Vitest and Playwright wired up, with one test each.
 
 **Done when:** `docker compose up -d db && pnpm dev` serves `/admin` (first admin user created) and `/display`, and `pnpm test`, `pnpm test:e2e`, `pnpm lint` and `pnpm typecheck` pass.

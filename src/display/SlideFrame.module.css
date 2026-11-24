@@ -1,0 +1,50 @@
+/* Shared TV slide frame, per the "TV · 1 At a glance" screen design. 1920×1080. */
+.frame {
+  width: 1920px;
+  height: 1080px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--brand-white);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+.stripe {
+  height: 16px;
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.stripe span:nth-child(1) { background: var(--brand-orange); }
+.stripe span:nth-child(2) { background: var(--brand-amber); }
+.stripe span:nth-child(3) { background: var(--brand-gold); }
+.stripe span:nth-child(4) { background: var(--brand-sand); }
+
+.body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 48px var(--tv-margin) 40px;
+  box-sizing: border-box;
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+}
+
+.footer {
+  height: 80px;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  padding: 0 var(--tv-margin);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--ink-muted);
+  font-weight: 400;
+}

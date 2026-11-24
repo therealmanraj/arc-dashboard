@@ -1,11 +1,19 @@
-// Placeholder for build plan step 0: proves the design tokens and fonts load.
-// Replaced by the static "At a glance." frame next.
-export default function DisplayPage() {
+import { connection } from 'next/server'
+
+import { SlideFrame } from '@/display/SlideFrame'
+
+// Build plan step 0: a static "At a glance." frame. Content and the slide loop come in step 1.
+export default async function DisplayPage() {
+  // Render per request so the footer time is current.
+  await connection()
+
   return (
-    <main style={{ padding: 'var(--tv-margin)' }}>
-      <p className="tv-subhead">APPLIED RESEARCH CENTRE</p>
-      <h1 className="tv-title">At a glance.</h1>
-      <p className="tv-body">Roboto Slab for titles, Roboto for body and data.</p>
-    </main>
+    <SlideFrame
+      title="At a glance."
+      slideIndex={0}
+      slideCount={5}
+      nextTitle="Active grants"
+      now={new Date()}
+    />
   )
 }
