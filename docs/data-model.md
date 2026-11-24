@@ -126,12 +126,12 @@ Inputs: all grants (excluding `archived`), `now`, `AppSettings`. Fiscal year (FY
 | `studentsActive` | sum of `studentsInvolved` over active grants |
 | `fundingByFunder` | active grants grouped by funder, sum of `amountCents`, sorted descending |
 | `endingIn90Days` | active grants with `endDate` between today and today + 90 days |
-| `raisedSince2016Cents` | if `useBaseline`: baseline + sum of `amountCents` for grants with `startDate` after `baselineAsOf`; otherwise sum of `amountCents` for active and completed grants with `startDate` on or after 2016-01-01 |
+| `raisedSince2016Cents` | if `useBaseline`: baseline + sum of `amountCents` for active and completed grants with `startDate` after `baselineAsOf` (pending grants aren't money raised); otherwise sum of `amountCents` for active and completed grants with `startDate` on or after 2016-01-01 |
 | `areas[]` | per area: active `amountCents` sum, share of `activeFundingCents`, active count, funder with the largest sum |
 | `completed.recent` | 3 completed grants with the latest `completedAt`, display-visible only |
 | `completed.studentsThisFY`, `partnersThisFY` | sums or distinct counts over `completedThisFY` grants |
 
-All display metrics count only grants with `showOnDisplay = true`. `baselineAsOf` (when the $12.5M figure was reported) is an open question; until it's known, grants entered in the system are not added to the baseline.
+All display metrics count only grants with `showOnDisplay = true`. Dates are compared as `America/Vancouver` calendar days (`src/lib/fiscalYear.ts`), so a grant completed late on March 31 counts in the fiscal year that's ending. `baselineAsOf` (when the $12.5M figure was reported) is an open question; until it's known, grants entered in the system are not added to the baseline.
 
 ## Excel import contract (`src/import`)
 
