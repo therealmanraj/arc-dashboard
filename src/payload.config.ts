@@ -10,6 +10,7 @@ import { Funders } from './collections/Funders'
 import { Grants } from './collections/Grants'
 import { Media } from './collections/Media'
 import { Users } from './collections/Users'
+import { DisplaySettings } from './globals/DisplaySettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -22,6 +23,7 @@ export default buildConfig({
     },
   },
   collections: [Grants, Funders, EngagementTypes, Media, Users],
+  globals: [DisplaySettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

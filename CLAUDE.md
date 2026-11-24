@@ -48,6 +48,7 @@ pnpm test                    # Vitest
 pnpm test:e2e                # Playwright
 pnpm lint && pnpm typecheck
 pnpm payload migrate         # run database migrations
+pnpm display:key             # new TV display key; prints the /display link once (old link stops working)
 pnpm seed                    # load sample data (sample data only; never real grants)
 ```
 
