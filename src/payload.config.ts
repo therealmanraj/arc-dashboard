@@ -7,6 +7,7 @@ import sharp from 'sharp'
 
 import { EngagementTypes } from './collections/EngagementTypes'
 import { Funders } from './collections/Funders'
+import { Grants } from './collections/Grants'
 import { Media } from './collections/Media'
 import { Users } from './collections/Users'
 
@@ -20,7 +21,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Funders, EngagementTypes],
+  collections: [Grants, Funders, EngagementTypes, Media, Users],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

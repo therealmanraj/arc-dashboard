@@ -67,10 +67,11 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
-    media: Media;
+    grants: Grant;
     funders: Funder;
     'engagement-types': EngagementType;
+    media: Media;
+    users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,10 +79,11 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
+    grants: GrantsSelect<false> | GrantsSelect<true>;
     funders: FundersSelect<false> | FundersSelect<true>;
     'engagement-types': EngagementTypesSelect<false> | EngagementTypesSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -123,53 +125,66 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "grants".
  */
-export interface User {
+export interface Grant {
   id: number;
-  name: string;
+  title: string;
   /**
-   * Admins manage everything. Editors manage posts and photos only.
+   * Shown on the TV. Up to 200 characters.
    */
-  role: 'admin' | 'editor';
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  resetPasswordRequestedAt?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
+  shortDescription?: string | null;
+  funder: number | Funder;
+  program?: string | null;
+  /**
+   * In cents: $250,000 is 25000000.
+   */
+  amountCents?: number | null;
+  area: 'natural-products' | 'data-analytics' | 'social-innovation';
+  engagementType?: (number | null) | EngagementType;
+  facultyLead?: string | null;
+  partner?: string | null;
+  /**
+   * Keep the partner name off the TV.
+   */
+  hidePartnerOnDisplay?: boolean | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  status: 'pending' | 'active' | 'completed' | 'archived';
+  /**
+   * Set when the status changes to Completed.
+   */
+  completedAt?: string | null;
+  /**
+   * Mark as Completed automatically the day after the end date.
+   */
+  autoComplete?: boolean | null;
+  studentsInvolved?: number | null;
+  /**
+   * Shown on the Recently completed slide. Up to 120 characters.
+   */
+  outcomeHighlight?: string | null;
+  coverPhoto?: (number | null) | Media;
+  /**
+   * Untick to keep this grant off the TV.
+   */
+  showOnDisplay?: boolean | null;
+  source?: ('manual' | 'excel' | 'dynamics365') | null;
+  externalId?: string | null;
+  /**
+   * Phase 2: fields owned by Dynamics 365.
+   */
+  lockedFields?:
     | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
     | null;
-  password?: string | null;
-  collection: 'users';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -201,6 +216,56 @@ export interface EngagementType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: number;
+  name: string;
+  /**
+   * Admins manage everything. Editors manage posts and photos only.
+   */
+  role: 'admin' | 'editor';
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -224,12 +289,8 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: number | Media;
+        relationTo: 'grants';
+        value: number | Grant;
       } | null)
     | ({
         relationTo: 'funders';
@@ -238,6 +299,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'engagement-types';
         value: number | EngagementType;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -283,6 +352,74 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "grants_select".
+ */
+export interface GrantsSelect<T extends boolean = true> {
+  title?: T;
+  shortDescription?: T;
+  funder?: T;
+  program?: T;
+  amountCents?: T;
+  area?: T;
+  engagementType?: T;
+  facultyLead?: T;
+  partner?: T;
+  hidePartnerOnDisplay?: T;
+  startDate?: T;
+  endDate?: T;
+  status?: T;
+  completedAt?: T;
+  autoComplete?: T;
+  studentsInvolved?: T;
+  outcomeHighlight?: T;
+  coverPhoto?: T;
+  showOnDisplay?: T;
+  source?: T;
+  externalId?: T;
+  lockedFields?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "funders_select".
+ */
+export interface FundersSelect<T extends boolean = true> {
+  name?: T;
+  sortOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "engagement-types_select".
+ */
+export interface EngagementTypesSelect<T extends boolean = true> {
+  name?: T;
+  sortOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -305,44 +442,6 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "funders_select".
- */
-export interface FundersSelect<T extends boolean = true> {
-  name?: T;
-  sortOrder?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "engagement-types_select".
- */
-export interface EngagementTypesSelect<T extends boolean = true> {
-  name?: T;
-  sortOrder?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
