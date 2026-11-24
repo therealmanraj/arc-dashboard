@@ -30,7 +30,7 @@ Visual references (open in a browser):
 
 - **Payload CMS 3** (stable; do not use the v4 beta) running inside **Next.js** (App Router), **TypeScript** strict.
 - Keep Next.js inside the version range Payload 3 supports; check `payload` peer dependencies before any Next.js upgrade.
-- **Node.js** current LTS (20.9 or newer). **pnpm** as the package manager.
+- **Node.js** 26 LTS (`.nvmrc`; Payload 3.94 needs 22.23.5+, 24.22.3+ or 26.13.1+). **pnpm** as the package manager.
 - **PostgreSQL** via Docker Compose (`@payloadcms/db-postgres`).
 - Media stored on local disk (Payload's default upload storage).
 - Excel parsing: SheetJS. Charts: hand-built SVG/CSS, no chart library.
@@ -38,7 +38,7 @@ Visual references (open in a browser):
 
 ## Commands
 
-The project is not scaffolded yet. Once it is, keep this section accurate.
+Keep this section accurate. Scaffolding is in progress (build plan step 0), so `pnpm seed` isn't added yet.
 
 ```bash
 docker compose up -d db      # start Postgres

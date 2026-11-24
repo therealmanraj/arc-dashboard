@@ -6,7 +6,7 @@ Phase 1 is one Next.js app with Payload CMS embedded, backed by PostgreSQL. It r
 
 | Layer | Choice | Notes |
 | --- | --- | --- |
-| Runtime | Node.js, current LTS (≥ 20.9) | Payload 3's minimum is 20.9 |
+| Runtime | Node.js 26 LTS (`.nvmrc`) | Payload 3.94 needs `^22.23.5`, `^24.22.3` or `>=26.13.1` |
 | Package manager | pnpm | Payload's preferred manager |
 | App framework | Next.js, App Router, TypeScript strict | Pin to a version inside Payload 3's supported range |
 | CMS | Payload CMS 3 (stable) | Embedded in the Next.js app: admin panel, Local API, auth, uploads, versions and drafts |

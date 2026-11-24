@@ -26,7 +26,7 @@ Payload CMS 3 on Next.js (TypeScript), PostgreSQL in Docker, and media on local 
 
 ## Getting started
 
-Not scaffolded yet. Once it is:
+Needs Node 26 LTS (see `.nvmrc`), pnpm and Docker.
 
 ```bash
 cp .env.example .env

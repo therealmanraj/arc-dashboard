@@ -4,8 +4,8 @@ Phase 1, in build order. Each step is a thin vertical slice that runs end to end
 
 ## 0. Walking skeleton
 
-- [ ] Scaffold with `create-payload-app` (Postgres, blank template), pnpm, TypeScript strict, ESLint and Prettier.
-- [ ] `docker-compose.yml` with Postgres 16 and a named volume; `.env.example`.
+- [x] Scaffold with `create-payload-app` (Postgres, blank template), pnpm, TypeScript strict, ESLint and Prettier.
+- [x] `docker-compose.yml` with Postgres 16 and a named volume; `.env.example`.
 - [ ] Import `design/tokens.css` and `design/components.css`; Roboto Slab and Roboto from Google Fonts.
 - [ ] `/display` renders a static "At a glance." frame (stripe, logo, title, pager, footer) at 1920×1080.
 - [ ] Vitest and Playwright wired up, with one test each.
